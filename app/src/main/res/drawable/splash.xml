@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:drawable="@color/myBlue"/>
+    <item>
+        <bitmap
+            android:antialias="false"
+            android:autoMirrored="false"
+            android:dither="false"
+            android:filter="false"
+            android:gravity="center"
+            android:mipMap="false"
+            android:src="@drawable/newslistener"
+            android:tileMode="disabled"
+            android:tileModeX="disabled" />
+    </item>
+</layer-list>

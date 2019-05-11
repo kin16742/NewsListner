@@ -161,12 +161,29 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="   관심 카테고리 :"
+            android:text="   관심 :"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
         <Spinner
             android:id="@+id/favorite"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:background="@null"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="  목소리 :"
+            android:background="@drawable/underbar_button_bg"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/voiceSelect"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_horizontal"

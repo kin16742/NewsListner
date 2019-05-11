@@ -1,9 +1,7 @@
 package com.example.kin16.newslistener;
 
-import android.media.MediaPlayer;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -16,8 +14,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-public class newsSpeech {
-    private static String TAG = "newsSpeech";
+public class makeIntro {
+    private static String TAG = "makeIntro";
 
     public static void main(String[] args, String voice) {
         String clientId = "vinxxy8c3t";//애플리케이션 클라이언트 아이디값";
@@ -55,8 +53,8 @@ public class newsSpeech {
                 File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Naver");
 
                 String dirname = file.getAbsolutePath();
-                String mp3Name = file.getAbsolutePath() + "/naverTTS.mp3";
-                String chkFile = file.getAbsolutePath() + "/chk";
+                String mp3Name = file.getAbsolutePath() + "/intro.mp3";
+
                 File dir = new File(dirname);
                 Log.d(TAG, "dir 변수 할당 dir 경로 : " + dirname);
                 if(!dir.exists()){
@@ -73,8 +71,6 @@ public class newsSpeech {
                 }
                 Log.d(TAG, "mp3 파일 읽어옴");
                 is.close();
-                File chkF = new File(chkFile);
-                chkF.createNewFile();
             }
 
             else {  // 에러 발생

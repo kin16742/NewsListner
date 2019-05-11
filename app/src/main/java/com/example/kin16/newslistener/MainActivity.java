@@ -6,6 +6,9 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.speech.RecognitionListener;
+import android.speech.RecognizerIntent;
+import android.speech.SpeechRecognizer;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -39,32 +42,51 @@ public class MainActivity extends AppCompatActivity {
     private static String TAG = "메인";
 
     String array[] = {"(탭해서 선택)", "정치","경제","사회","생활/문화","세계","IT/과학","연예","스포츠"};
+    String voiceS[] = {"남자", "여자"};
+    String introText = "뉴스 리스너입니다. 말씀하세요.";
 
     File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Naver");
     String mp3Name = file.getAbsolutePath() + "/naverTTS.mp3";
+    String introName = file.getAbsolutePath() + "/intro.mp3";
     String chkF = file.getAbsolutePath() + "/chk";
+
+    Intent i;
+    SpeechRecognizer mRecognizer;
 
     HorizontalScrollView sv;
     customViewPager vp;
     LinearLayout ll1, ll2;
     private NaverTTSTask mNaverTTSTask;
+    private introMaker introMakerTask;
     String[] mTextString;
-    Button btTTS;
+    Button btTTS, btSTT;
     TextView myText;
-    MediaPlayer audioPlay;
-    Spinner sp;
+    MediaPlayer audioPlay, introPlay;
+    Spinner sp, vs;
+
+    TextView tvTemp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        i = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        i.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, getPackageName());
+        i.putExtra(RecognizerIntent.EXTRA_LANGUAGE, "ko-KR");
+
+        mRecognizer = SpeechRecognizer.createSpeechRecognizer(this);
+        mRecognizer.setRecognitionListener(listener);
+
+        tvTemp = findViewById(R.id.tv1_0);
         vp = findViewById(R.id.vp);
         ll1 = findViewById(R.id.ll1);
         ll2 = findViewById(R.id.ll2);
         btTTS = findViewById(R.id.btTTS);
+        btSTT = findViewById(R.id.btSTT);
         sv = findViewById(R.id.sv);
         sp = findViewById(R.id.favorite);
+        vs = findViewById(R.id.voiceSelect);
 
 
         ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(this, R.layout.spinner_text, array);
@@ -79,7 +101,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        ArrayAdapter<String> spinner_adapter2 = new ArrayAdapter<String>(this, R.layout.spinner_text, voiceS);
+        spinner_adapter2.setDropDownViewResource(R.layout.spinner_text);
+        vs.setAdapter(spinner_adapter2);
+        vs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
+        btSTT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mRecognizer.startListening(i);
+            }
+        });
 
         btTTS.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -147,6 +186,19 @@ public class MainActivity extends AppCompatActivity {
         new TedPermission(this)
                 .setPermissionListener(pl)
                 .setPermissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .check();
+        PermissionListener pl2 = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            }
+        };
+        new TedPermission(this)
+                .setPermissionListener(pl2)
+                .setPermissions(Manifest.permission.RECORD_AUDIO)
                 .check();
 
         Button tab_1 = findViewById(R.id.tab1);
@@ -245,6 +297,61 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume(){
+        super.onResume();
+
+        File iF = new File(introName);
+
+        if(iF.exists()){
+            intro();
+        }
+        else {
+            mTextString = new String[]{introText};
+
+            introMakerTask = new introMaker();
+            introMakerTask.execute(mTextString);
+        }
+    }
+
+    @Override
+    protected void onStop(){
+        super.onStop();
+
+        File iF = new File(introName);
+
+        if(iF.exists()){
+            iF.delete();
+        }
+    }
+
+    private void intro(){
+
+        introPlay = new MediaPlayer();
+        try {
+            Log.d(TAG, "인트로 읽는 중");
+            introPlay.setDataSource(introName);
+            introPlay.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mediaPlayer) {
+                    File iF = new File(introName);
+
+                    iF.delete();
+                }
+            });
+            introPlay.prepare();
+            introPlay.start();
+
+            reserveListen();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private void reserveListen(){
+        mRecognizer.startListening(i);
+    }
+
     View.OnClickListener movePageListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -318,13 +425,159 @@ public class MainActivity extends AppCompatActivity {
     private class NaverTTSTask extends AsyncTask<String[], Void, String> {
         @Override
         protected String doInBackground(String[]... strings){
-            newsSpeech.main(mTextString);
+            String voice = vs.getSelectedItem().toString();
+            if(voice.equals("남자"))
+                newsSpeech.main(mTextString, "jinho");
+            else
+                newsSpeech.main(mTextString, "mijin");
             return null;
         }
 
         @Override
         protected void onPostExecute(String result){
             super.onPostExecute(result);
+        }
+    }
+    private class introMaker extends AsyncTask<String[], Void, String> {
+        @Override
+        protected String doInBackground(String[]... strings){
+            String voice = vs.getSelectedItem().toString();
+            if(voice.equals("남자"))
+                makeIntro.main(mTextString, "jinho");
+            else
+                makeIntro.main(mTextString, "mijin");
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+        }
+    }
+    private RecognitionListener listener = new RecognitionListener() {
+        @Override
+        public void onReadyForSpeech(Bundle bundle) {
+
+        }
+
+        @Override
+        public void onBeginningOfSpeech() {
+
+        }
+
+        @Override
+        public void onRmsChanged(float v) {
+
+        }
+
+        @Override
+        public void onBufferReceived(byte[] bytes) {
+
+        }
+
+        @Override
+        public void onEndOfSpeech() {
+            reserveListen();
+        }
+
+        @Override
+        public void onError(int error) {
+            String message;
+            switch (error) {
+                case SpeechRecognizer.ERROR_AUDIO:
+                    message = "Audio recording error";
+                    break;
+                case SpeechRecognizer.ERROR_CLIENT:
+                    message = "Client side error";
+                    break;
+                case SpeechRecognizer.ERROR_INSUFFICIENT_PERMISSIONS:
+                    message = "Insufficient permissions";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK:
+                    message = "Network error";
+                    break;
+                case SpeechRecognizer.ERROR_NETWORK_TIMEOUT:
+                    message = "Network timeout";
+                    break;
+                case SpeechRecognizer.ERROR_NO_MATCH:
+                    message = "No match";
+                    break;
+                case SpeechRecognizer.ERROR_RECOGNIZER_BUSY:
+                    message = "RecognitionService busy";
+                    break;
+                case SpeechRecognizer.ERROR_SERVER:
+                    message = "error from server";
+                    break;
+                case SpeechRecognizer.ERROR_SPEECH_TIMEOUT:
+                    message = "No speech input";
+                    break;
+                default:
+                    message = "Didn't understand, please try again.";
+                    break;
+            }
+            Log.d(TAG, "test error :" + message);
+            reserveListen();
+        }
+
+        @Override
+        public void onResults(Bundle results) {
+            ArrayList<String> rsts = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
+            startAction(rsts);
+        }
+
+        @Override
+        public void onPartialResults(Bundle bundle) {
+
+        }
+
+        @Override
+        public void onEvent(int i, Bundle bundle) {
+
+        }
+    };
+
+    private void startAction(ArrayList<String> rst){
+        String[] rs = new String[rst.size()];
+        rst.toArray(rs);
+        Toast.makeText(getApplicationContext(), rs[0], Toast.LENGTH_LONG).show();
+        if(rs[0].equals("읽어 줘")){
+            int curr = vp.getCurrentItem();
+            File chkFile = new File(chkF);
+
+            int k = getResources().getIdentifier("tv1_" + curr, "id", getPackageName());
+            myText = findViewById(k);
+            String mText = "1번째 뉴스입니다.\n" + myText.getText().toString() + ".\n";
+
+            for (int i = 2; i <= 10; i++) {
+                k = getResources().getIdentifier("tv" + i + "_" + curr, "id", getPackageName());
+                myText = findViewById(k);
+                mText = mText + i + "번째 뉴스입니다.\n" + myText.getText().toString() + ".\n";
+            }
+            Log.d(TAG, mText);
+            mTextString = new String[]{mText};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+
+            try {
+                audioPlay = new MediaPlayer();
+                audioPlay.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        audioPlay.seekTo(0);
+                        btTTS.setText("재생");
+                    }
+                });
+                while(!chkFile.exists());
+
+                audioPlay.setDataSource(mp3Name);
+
+                audioPlay.prepare();
+                audioPlay.start();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            btTTS.setText("일시정지");
         }
     }
 }

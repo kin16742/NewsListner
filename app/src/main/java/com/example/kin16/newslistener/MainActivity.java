@@ -6,6 +6,7 @@ import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
@@ -15,6 +16,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +25,7 @@ import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity {
     String introName = file.getAbsolutePath() + "/intro.mp3";
     String chkF = file.getAbsolutePath() + "/chk";
 
+    int recognize = 1;
+
     Intent i;
     SpeechRecognizer mRecognizer;
 
@@ -61,8 +66,10 @@ public class MainActivity extends AppCompatActivity {
     String[] mTextString;
     Button btTTS, btSTT;
     TextView myText;
-    MediaPlayer audioPlay, introPlay;
+    MediaPlayer audioPlay, introPlay, MP;
+    ;
     Spinner sp, vs;
+    Switch sw;
 
     TextView tvTemp;
 
@@ -83,11 +90,10 @@ public class MainActivity extends AppCompatActivity {
         ll1 = findViewById(R.id.ll1);
         ll2 = findViewById(R.id.ll2);
         btTTS = findViewById(R.id.btTTS);
-        btSTT = findViewById(R.id.btSTT);
         sv = findViewById(R.id.sv);
         sp = findViewById(R.id.favorite);
         vs = findViewById(R.id.voiceSelect);
-
+        sw = findViewById(R.id.switch1);
 
         ArrayAdapter<String> spinner_adapter = new ArrayAdapter<String>(this, R.layout.spinner_text, array);
         spinner_adapter.setDropDownViewResource(R.layout.spinner_text);
@@ -113,12 +119,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        btSTT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mRecognizer.startListening(i);
-            }
-        });
+
 
         btTTS.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -246,7 +247,6 @@ public class MainActivity extends AppCompatActivity {
         cate_8.setTag(11);
 
         tab_1.setSelected(true);
-
         vp.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -335,21 +335,22 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onCompletion(MediaPlayer mediaPlayer) {
                     File iF = new File(introName);
-
                     iF.delete();
+                    reserveListen();
                 }
             });
             introPlay.prepare();
             introPlay.start();
 
-            reserveListen();
         } catch (Exception e) {
             System.out.println(e);
         }
     }
 
     private void reserveListen(){
-        mRecognizer.startListening(i);
+        if(recognize == 1){
+            mRecognizer.startListening(i);
+        }
     }
 
     View.OnClickListener movePageListener = new View.OnClickListener() {
@@ -516,7 +517,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
             Log.d(TAG, "test error :" + message);
-            reserveListen();
         }
 
         @Override
@@ -539,10 +539,38 @@ public class MainActivity extends AppCompatActivity {
     private void startAction(ArrayList<String> rst){
         String[] rs = new String[rst.size()];
         rst.toArray(rs);
+        File chkFile = new File(chkF);
         Toast.makeText(getApplicationContext(), rs[0], Toast.LENGTH_LONG).show();
+
+        if(rs[0].equals("안녕")) {
+            recognize = 0;
+            mTextString = new String[]{"안녕하세요 저는 뉴스리스너입니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        MP.release();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
         if(rs[0].equals("읽어 줘")){
+            recognize = 0;
             int curr = vp.getCurrentItem();
-            File chkFile = new File(chkF);
 
             int k = getResources().getIdentifier("tv1_" + curr, "id", getPackageName());
             myText = findViewById(k);
@@ -566,10 +594,12 @@ public class MainActivity extends AppCompatActivity {
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         audioPlay.seekTo(0);
                         btTTS.setText("재생");
+                        recognize = 1;
+                        reserveListen();
                     }
                 });
                 while(!chkFile.exists());
-
+                chkFile.delete();
                 audioPlay.setDataSource(mp3Name);
 
                 audioPlay.prepare();
@@ -578,6 +608,382 @@ public class MainActivity extends AppCompatActivity {
                 System.out.println(e);
             }
             btTTS.setText("일시정지");
+        }
+        if(rs[0].equals("추천") || rs[0].equals("추천 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"추천 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(0);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("지역별") || rs[0].equals("지역별 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"지역별 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(1);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("인기") || rs[0].equals("인기 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"인기 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(2);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("오늘")) {
+            recognize = 0;
+            mTextString = new String[]{"오늘 본 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(3);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("정치") || rs[0].equals("정치 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"정치 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(4);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("경제") || rs[0].equals("경제 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"경제 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(5);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("사회") || rs[0].equals("사회 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"사회 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(6);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("사회") || rs[0].equals("사회 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"사회 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(6);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("생활") || rs[0].equals("문화")) {
+            recognize = 0;
+            mTextString = new String[]{"생활/문화 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(7);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("세계") || rs[0].equals("세계 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"세계 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(8);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("IT") || rs[0].equals("과학")) {
+            recognize = 0;
+            mTextString = new String[]{"IT/과학 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(9);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("연예") || rs[0].equals("연예 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"연예 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(10);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("스포츠") || rs[0].equals("스포츠 뉴스")) {
+            recognize = 0;
+            mTextString = new String[]{"스포츠 뉴스로 이동합니다."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        recognize = 1;
+                        reserveListen();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+                vp.setCurrentItem(11);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+        }
+        if(rs[0].equals("고마워") || rs[0].equals("수고했어")) {
+            recognize = 0;
+            mTextString = new String[]{"그럼 안녕히계세요."};
+
+            mNaverTTSTask = new NaverTTSTask();
+            mNaverTTSTask.execute(mTextString);
+            try {
+                MP = new MediaPlayer();
+                MP.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        finish();
+                    }
+                });
+                while(!chkFile.exists());
+                chkFile.delete();
+
+                MP.setDataSource(mp3Name);
+
+                MP.prepare();
+                MP.start();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
     }
 }

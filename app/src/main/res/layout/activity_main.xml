@@ -161,7 +161,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:text="   관심 :"
+            android:text="   관심 카테고리 :"
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
@@ -200,15 +200,13 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/btSTT"
+        <Switch
+            android:id="@+id/switch1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/underbar_button_bg"
-            android:text="음성검색"
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:checked="true" />
+
     </LinearLayout>
 
 </LinearLayout>

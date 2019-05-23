@@ -201,6 +201,32 @@ public class MainActivity extends AppCompatActivity {
                 .setPermissionListener(pl2)
                 .setPermissions(Manifest.permission.RECORD_AUDIO)
                 .check();
+        PermissionListener pl3 = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            }
+        };
+        new TedPermission(this)
+                .setPermissionListener(pl3)
+                .setPermissions(Manifest.permission.ACCESS_FINE_LOCATION)
+                .check();
+        PermissionListener pl4 = new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+            }
+        };
+        new TedPermission(this)
+                .setPermissionListener(pl4)
+                .setPermissions(Manifest.permission.ACCESS_COARSE_LOCATION)
+                .check();
 
         Button tab_1 = findViewById(R.id.tab1);
         Button tab_2 = findViewById(R.id.tab2);

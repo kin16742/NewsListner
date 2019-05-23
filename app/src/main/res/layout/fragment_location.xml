@@ -19,110 +19,200 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
-                android:text=""
+                android:text="1"
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv1_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv2_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv2_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:background = "@drawable/newscom_bg"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv3_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv3_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv4_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv4_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:background = "@drawable/newscom_bg"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv5_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv5_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:background = "@drawable/newscom_bg"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv6_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv6_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:background = "@drawable/newscom_bg"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv7_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv7_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv8_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=" "
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv8_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv9_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:background = "@drawable/article_bg"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv9_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
 
             <TextView
                 android:id="@+id/tv10_1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:paddingBottom="10dp"
                 android:text=""
+                android:background = "@drawable/article_bg"
                 android:textColor="#000000"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv10_1_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background = "@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
         </LinearLayout>
     </ScrollView>
 

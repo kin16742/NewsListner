@@ -2,17 +2,230 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <TextView
-        android:id = "@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="키워드를 검색하세요"
+        android:id="@+id/tv_key_title"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:background="@drawable/tab_bg_on"
+        android:text="dddd"
         android:textColor="#000000"
-        android:textSize="30dp"
+        android:textSize="30sp"
         android:textStyle="bold" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/tv_key_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text="1"
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv1_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv2_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv2_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv3_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv3_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv4_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv4_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv5_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv5_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv6_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv6_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv7_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv7_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv8_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=" "
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv8_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv9_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv9_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv10_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:background="@drawable/article_bg"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv10_1_key"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/newscom_bg"
+                android:paddingBottom="10dp"
+                android:textAlignment="textEnd"
+                android:textColor="#000000" />
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

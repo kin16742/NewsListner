@@ -128,17 +128,6 @@
             android:background="@drawable/tab_bg_selector"
             android:textSize="16sp" />
 
-        <Button
-            android:id="@+id/tab4"
-            android:layout_width="0dp"
-            android:layout_height="fill_parent"
-            android:layout_weight="1"
-            android:text="오늘 본 뉴스"
-            android:gravity="center"
-            android:textColor="@drawable/tab_color_selector"
-            android:background="@drawable/tab_bg_selector"
-            android:textSize="16sp" />
-
 
     </LinearLayout>
 
@@ -200,12 +189,15 @@
             android:textColor="@android:color/black"
             android:textSize="16sp" />
 
-        <Switch
-            android:id="@+id/switch1"
+        <Button
+            android:id="@+id/btSTT"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:checked="true" />
+            android:background="@drawable/underbar_button_bg"
+            android:text="뉴스리스너"
+            android:textColor="@android:color/black"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

@@ -25,7 +25,7 @@ public class categoryNews_2 extends Fragment{
     String chk = "1";
     String result = "";
     BackgroundTask task;
-    TextView tvk, tvj;
+    TextView tvk, tvj, tvh;
     public categoryNews_2(){}
 
     @Override
@@ -42,7 +42,7 @@ public class categoryNews_2 extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String test;
-        tvk = getActivity().findViewById(R.id.tv1_5);
+        tvk = getActivity().findViewById(R.id.tv1_4);
         test = tvk.getText().toString();
         if(test.equals(chk)) {
             task = new BackgroundTask();
@@ -58,8 +58,9 @@ public class categoryNews_2 extends Fragment{
                 String strTemp = st.nextToken();
                 st2 = new StringTokenizer(strTemp, "궭");
                 String strT1 = st2.nextToken();
-                int k = getResources().getIdentifier("tv" + i + "_5", "id", getActivity().getPackageName());
-                int j = getResources().getIdentifier("tv" + i + "_1_5", "id", getActivity().getPackageName());
+                int k = getResources().getIdentifier("tv" + i + "_4", "id", getActivity().getPackageName());
+                int j = getResources().getIdentifier("tv" + i + "_1_4", "id", getActivity().getPackageName());
+                int h = getResources().getIdentifier("tv" + i + "_2_4", "id", getActivity().getPackageName());
                 tvj = getActivity().findViewById(j);
                 tvj.setText(strT1);
 
@@ -70,6 +71,8 @@ public class categoryNews_2 extends Fragment{
                 tvk.setText(strT2);
 
                 final String strLink = st3.nextToken();
+                tvh = getActivity().findViewById(h);
+                tvh.setText(strLink);
                 tvk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,6 +83,8 @@ public class categoryNews_2 extends Fragment{
                 });
             }
         }
+
+        Log.d("카테고리","2 완료");
     }
 
     class BackgroundTask extends AsyncTask<Integer, Integer, Integer> {

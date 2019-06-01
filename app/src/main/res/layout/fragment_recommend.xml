@@ -35,6 +35,13 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tv1_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
+
+            <TextView
                 android:id="@+id/tv2_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -53,6 +60,13 @@
                 android:textAlignment="textEnd"
                 android:background = "@drawable/newscom_bg"
                 android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv2_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
 
             <TextView
                 android:id="@+id/tv3_0"
@@ -75,6 +89,12 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tv3_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
+            <TextView
                 android:id="@+id/tv4_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,6 +114,12 @@
                 android:textAlignment="textEnd"
                 android:textColor="#000000" />
 
+            <TextView
+                android:id="@+id/tv4_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
             <TextView
                 android:id="@+id/tv5_0"
                 android:layout_width="match_parent"
@@ -115,6 +141,12 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tv5_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
+            <TextView
                 android:id="@+id/tv6_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,6 +166,12 @@
                 android:background = "@drawable/newscom_bg"
                 android:textColor="#000000" />
 
+            <TextView
+                android:id="@+id/tv6_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
             <TextView
                 android:id="@+id/tv7_0"
                 android:layout_width="match_parent"
@@ -155,6 +193,12 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tv7_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
+            <TextView
                 android:id="@+id/tv8_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -174,6 +218,12 @@
                 android:textAlignment="textEnd"
                 android:textColor="#000000" />
 
+            <TextView
+                android:id="@+id/tv8_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
             <TextView
                 android:id="@+id/tv9_0"
                 android:layout_width="match_parent"
@@ -195,6 +245,12 @@
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tv9_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
+            <TextView
                 android:id="@+id/tv10_0"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -213,6 +269,13 @@
                 android:paddingBottom="10dp"
                 android:textAlignment="textEnd"
                 android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tv10_2_0"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background = "@android:color/transparent"
+                android:textColor="@android:color/transparent" />
         </LinearLayout>
     </ScrollView>
 

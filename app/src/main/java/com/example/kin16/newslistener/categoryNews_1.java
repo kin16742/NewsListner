@@ -25,7 +25,7 @@ public class categoryNews_1 extends Fragment{
     String chk = "1";
     String result = "";
     BackgroundTask task;
-    TextView tvk, tvj;
+    TextView tvk, tvj, tvh;
     public categoryNews_1(){}
 
     @Override
@@ -42,13 +42,13 @@ public class categoryNews_1 extends Fragment{
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String test;
-        tvk = getActivity().findViewById(R.id.tv1_4);
+        tvk = getActivity().findViewById(R.id.tv1_3);
         test = tvk.getText().toString();
         if(test.equals(chk)) {
             task = new BackgroundTask();
             task.execute();
 
-            while (result == "") ;
+            while (result == "");
 
             StringTokenizer st = new StringTokenizer(result, "뒑");
             StringTokenizer st2;
@@ -58,8 +58,9 @@ public class categoryNews_1 extends Fragment{
                 String strTemp = st.nextToken();
                 st2 = new StringTokenizer(strTemp, "궭");
                 String strT1 = st2.nextToken();
-                int k = getResources().getIdentifier("tv" + i + "_4", "id", getActivity().getPackageName());
-                int j = getResources().getIdentifier("tv" + i + "_1_4", "id", getActivity().getPackageName());
+                int k = getResources().getIdentifier("tv" + i + "_3", "id", getActivity().getPackageName());
+                int j = getResources().getIdentifier("tv" + i + "_1_3", "id", getActivity().getPackageName());
+                int h = getResources().getIdentifier("tv" + i + "_2_3", "id", getActivity().getPackageName());
                 tvj = getActivity().findViewById(j);
                 tvj.setText(strT1);
 
@@ -70,6 +71,8 @@ public class categoryNews_1 extends Fragment{
                 tvk.setText(strT2);
 
                 final String strLink = st3.nextToken();
+                tvh = getActivity().findViewById(h);
+                tvh.setText(strLink);
                 tvk.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -80,6 +83,7 @@ public class categoryNews_1 extends Fragment{
                 });
             }
         }
+        Log.d("카테고리","1 완료");
     }
 
     class BackgroundTask extends AsyncTask<Integer, Integer, Integer> {

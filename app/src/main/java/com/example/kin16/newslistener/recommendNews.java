@@ -25,7 +25,7 @@ public class recommendNews extends Fragment{
     String chk = "1";
     String result = "";
     BackgroundTask task;
-    TextView tvk, tvj;
+    TextView tvk, tvj, tvh;
     String TAG = "추천뉴스";
 
     public recommendNews(){}
@@ -57,11 +57,11 @@ public class recommendNews extends Fragment{
 
             for (int i = 1; i <= 6; i++) {
                     String strTemp = st.nextToken();
-                    Log.d(TAG, "뉴스" + i);
                     st2 = new StringTokenizer(strTemp, "궭");
                     String strT1 = st2.nextToken();
                     int k = getResources().getIdentifier("tv" + i + "_0", "id", getActivity().getPackageName());
                     int j = getResources().getIdentifier("tv" + i + "_1_0", "id", getActivity().getPackageName());
+                    int h = getResources().getIdentifier("tv" + i + "_2_0", "id", getActivity().getPackageName());
                     tvj = getActivity().findViewById(j);
                     tvj.setText(strT1);
 
@@ -72,6 +72,8 @@ public class recommendNews extends Fragment{
                     tvk.setText(strT2);
 
                     final String strLink = st3.nextToken();
+                    tvh = getActivity().findViewById(h);
+                    tvh.setText(strLink);
                     tvk.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -83,6 +85,7 @@ public class recommendNews extends Fragment{
                 }
 
         }
+        Log.d("추천뉴스","완료");
     }
 
     class BackgroundTask extends AsyncTask<Integer, Integer, Integer> {
